@@ -31,6 +31,41 @@
 mvn googleformatter:format
 ```
 
+### Running as a Git Hook
+ You will need a local instance of maven installed and setup. Alternatively, you can use the maven-wrapper if present in the project, but this is not necessarily platform independent. If you are using Windows, this will only work if you have Git for Windows installed as your default Git command line tool. Powershell 7+ also seems to be compatible without issues.
+
+1. In the root directory of the project, there is a hidden `.git` folder.
+1. Navigate to `.git/hooks` and you will see sample hooks.
+1. For running the plugin before any commit, rename `pre-commit.sample` to `pre-commit` (or create a new one) and add the shell command for running maven and include the shebang:
+```sh
+#!/bin/sh
+
+mvn googleformatter:format
+```
+Now, anytime you run `git commit`, the plugin will run and format your code. If any changes are made, they are not automatically staged. You must restage them with `git add <file or path>` as you would usually, then re-commit the changes.
+
+If you have multiple maven projects set up in the base git folder, or the maven project is not present at the base of the project, you can use other bash commands to navigate normally.
+
+Example:
+```
+.git
+project1/
+    ---- some maven project
+project2/
+    ---- another maven project
+README.md
+```
+
+You can use the following shell script to execute the formatter in both projects before commits:
+```sh
+#!/bin/sh
+
+cd project1
+mvn googleformatter:format
+cd ../project2
+mvn googleformatter:format
+```
+
 ## VSCode
 ### Pre-Requesite
 If not already installed, install the [Language Support for Java extension by RedHat](https://marketplace.visualstudio.com/items?itemName=redhat.java)
