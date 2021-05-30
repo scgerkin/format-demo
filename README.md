@@ -1,3 +1,8 @@
+# Auto-formatting Java projects using Google Java Style Guide
+[The Google Java Style Guide](https://google.github.io/styleguide/javaguide.html) is a well-structured and clean way of formatting your Java source files, making every file consistent and easy to read across projects. Abstracting the process of thought regarding code formatting away from a developer helps them to focus on what is important and can significantly reduce any arguments amongst teams that all have personal preferences for formatting styles.
+
+This README gives a quick walkthrough setting up plugins for using this coding style for multiple IDEs to hopefully enable harmony and allow developers to focus on the content of their code, rather than the structure.
+
 ## Maven Plugin
 1. Include the `googleformatter-maven-plugin` in the `pom.xml`:
 ```xml
