@@ -3,6 +3,8 @@
 
 This README gives a quick walkthrough setting up plugins for using this coding style for multiple IDEs to hopefully enable harmony and allow developers to focus on the content of their code, rather than the structure.
 
+The provided `format-demo` project within only serves as a "hello world" using Spring as a basis for demonstrating the setup.
+
 ## Maven Plugin
 1. Include the `googleformatter-maven-plugin` in the `pom.xml`:
 ```xml
@@ -150,3 +152,63 @@ You can set this to work for the entire file or only what has been changed in ve
 ![](media/intellij/configure-save-actions.png)
 
 AS A NOTE: By default, IntelliJ automatically saves changes as you code. If the editor loses focus, this plugin will be triggered and reformat your file according to your settings. If this is overly disruptive, the solution is to only allow the plugin to be triggered on the `ctrl+shift+S` hotkey.
+
+## Enforcing standard with Checksytle Plugin
+The Checkstyle plugin can be used to enforce formatting in CI pipelines and during local development by failing builds if they are not up to code.
+
+### Setup
+1. Add the plugin to the project `pom.xml` and include a `property` tag for the file location:
+```xml
+  <properties>
+    <!-- other properties -->
+    <styling.file.loc>${project.basedir}/config/google_checks.xml</styling.file.loc>
+  </properties>
+
+<!-- Dependencies and other requirements -->
+
+  <build>
+    <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.1.1</version>
+        <configuration>
+          <configLocation>${styling.file.loc}</configLocation>
+          <encoding>UTF-8</encoding>
+          <consoleOutput>true</consoleOutput>
+          <failsOnError>true</failsOnError>
+          <maxAllowedViolations>0</maxAllowedViolations>
+          <violationSeverity>ALL</violationSeverity>
+          <failOnViolation>true</failOnViolation>
+        </configuration>
+        <executions>
+          <execution>
+            <id>validate</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Other plugins -->
+    </plugins>
+  </build>
+```
+
+2. Include the [google_checks.xml file](https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/google_checks.xml) where indicated with the `style.file.loc` property. This file is also included at the base of this project.
+3. Use the goal:
+```sh
+mvn checkstyle:check
+```
+
+The configuration above automatically runs Checkstyle during any `validate` phases (before build, install, etc).
+![](media/checkstyle/install-failure.png)
+
+Formatting the files and rerunning the check will allow the build to pass:
+![](media/checkstyle/format-and-clean.png)
+
+
+The plugin above can be configured as appropriate to be more lenient or not fail based on certain metrics. For more information about the plugin, see the [Maven Checkstyle Plugin documentation](https://maven.apache.org/plugins/maven-checkstyle-plugin/)
