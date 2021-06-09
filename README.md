@@ -1,7 +1,7 @@
 # Auto-formatting Java projects using Google Java Style Guide
 [The Google Java Style Guide](https://google.github.io/styleguide/javaguide.html) is a well-structured and clean way of formatting your Java source files, making every file consistent and easy to read across projects. Abstracting the process of thought regarding code formatting away from a developer helps them to focus on what is important and can significantly reduce any arguments amongst teams that all have personal preferences for formatting styles.
 
-This README gives a quick walkthrough setting up plugins for using this coding style for multiple IDEs to hopefully enable harmony and allow developers to focus on the content of their code, rather than the structure.
+This document gives a quick walk-through setting up plugins for using this coding style for multiple IDEs to hopefully enable harmony and allow developers to focus on the content of their code, rather than the structure.
 
 The provided `format-demo` project within only serves as a "hello world" using Spring as a basis for demonstrating the setup.
 
@@ -112,9 +112,9 @@ Directions from Google can be found [in the repository](https://github.com/googl
 1. Download the [google-java-format Eclipse Plugin](https://github.com/google/google-java-format/releases/download/google-java-format-1.6/google-java-format-eclipse-plugin_1.6.0.jar)
 1. Copy the jar file to the "Dropins" folder in Eclipse. This is located inside the install path.
 For example:
-```
-C:\Users\scgrk\eclipse\java-2021-03\eclipse\dropins
-```
+  ```
+  C:\Users\scgrk\eclipse\java-2021-03\eclipse\dropins
+  ```
 1. Restart Eclipse (if already running)
 1. Open `Window -> Preferences -> Java -> Code Style -> Formatter`. A new `Formatter Implementation` dropdown is available here. Select `google-java-format`.
 ![](media/eclipse/eclipseformatter.png)
